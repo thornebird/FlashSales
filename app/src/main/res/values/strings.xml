@@ -1,0 +1,187 @@
+<resources>
+    <string name="app_name">Flash Sales</string>
+    <string name="flash">Flash</string>
+    <string name="sales">Sales</string>
+    <string name="open">Open</string>
+    <string name="closed">Closed</string>
+    <string name="currency">R</string>
+    <string name="only">Only</string>
+    <!-- Navigation-->
+    <string name="account">Account</string>
+    <string name="flash_sales">Flash Sales</string>
+    <string name="under150">Flash Sales Under R150</string>
+    <string name="under300">Flash Sales Under R300</string>
+    <string name="under500">Flash Sales Under R500</string>
+    <string name="under1000">Flash Sales Under R1000</string>
+    <string name="under2500">Flash Sales Under R2500</string>
+    <string name="faq">FAQ</string>
+    <!-- Navigation-->
+
+    <string name="facebook_app_id">1749508438461795</string>
+    <string name="fb_login_protocol_scheme">fb1749508438461795</string>
+
+
+    <string-array name="vp_titles">
+        <item>Product</item>
+        <item>Reviews</item>
+    </string-array>
+
+    <string name="cart">Cart</string>
+    <string name="bought_this">Bought this</string>
+    <string name="buy">Buy</string>
+    <string name="sizing">Sizing</string>
+    <string name="too_small">Too Small</string>
+    <string name="just_right">Just Right</string>
+    <string name="too_large">Too Large</string>
+    <string name="based_on">Based On</string>
+    <string name="shopping_reviews">Shopping Reviews</string>
+    <string name="overall">Overall</string>
+    <string name="shipping_payment">Shipping and Payment</string>
+    <string name="ship_to">Ship To</string>
+    <string name="address">Address</string>
+    <string name="enter_address">Enter your address</string>
+    <string name="items_in_cart">Items In Cart</string>
+    <string name="items">items</string>
+    <string name="remove">Delete</string>
+    <string name="total_price">Total price</string>
+    <string name="continue_shopping">Continue Shopping</string>
+    <string name="field_required">Field required too short</string>
+    <string name="close">Close</string>
+    <string name="checkout">Checkout</string>
+    <string name="select">Select a </string>
+    <string name="item_added_to_cart">Item Added To Cart</string>
+    <string name="you_saved">You Saved</string>
+    <string name="indicated_fields">*Indicated Fields Are Required</string>
+    <string name="first_name_required">*First Name</string>
+    <string name="last_name_required">*Last Name</string>
+    <string name="shipping_address">*Shipping Address</string>
+    <string name="apartment">Apt/Suite/Unit (Optional)</string>
+    <string name="country">Country</string>
+    <string name="state">Province</string>
+    <string name="city">City</string>
+    <string name="postcode">Postcode</string>
+    <string name="phone_no">Phone</string>
+    <string name="save">Save</string>
+    <string name="your_cart">Your Cart</string>
+    <string name="popular">Popular Flash Sales</string>
+    <string name="retail_price">Retail price </string>
+    <string name="sale_price">Sale price</string>
+    <string name="amount">Quanitity</string>
+    <string name="add_to_cart">Add To Cart</string>
+    <string name="hide_cart">Hide Cart</string>
+    <string name="show_cart">Show Cart</string>
+    <string name="or">Or complete the fileds below</string>
+    <string name="register">Register</string>
+    <string name="complete_fields">Complete the required fields below</string>
+    <string name="promotional">Claim Your Free Item For Every New App User</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="name">Full name</string>
+    <string name="email_address">Email address</string>
+    <string name="phone">Phone</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="login_with_fb">Login with Facebook</string>
+    <string name="error_pass_length">Password must contain 8 characters</string>
+    <string name="error_pass_empty">Password cannot be empty</string>
+    <string name="error_pass_no_match">Error passwords do not match</string>
+    <string name="error_invalid_email">Error invalid email</string>
+    <string name="error_invalid_phone">Error invalid phone number</string>
+    <string name="gender">Gender</string>
+    <string name="select_gender">Select a gender</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="loading">Loading...</string>
+    <string name="registeration_process">Account registeration</string>
+    <string name="succesfully_registered">Registeration was succesfull</string>
+    <string name="failed_registeration">Registeration was unsuccesfull. Please try again.</string>
+    <string name="registering_account">Please wait while we register our account.</string>
+    <string name="signed_out">Signed out</string>
+    <string name="cancelled_registerion">Registeration was cancelled. In order to use Flash Sales you must register</string>
+    <string name="save_thousands">Save thousands on our daily flash sales!</string>
+    <string name="cart_expires_in">Your cart will expire in </string>
+    <string name="slogan">Get It While It Lasts...</string>
+    <string name="adding_to_cart">Adding to cart.</string>
+    <string name="removing_from_cart">Removing item from cart.</string>
+    <string name="select_varient">Please select a </string>
+    <string name="select_amount">Please select an amount</string>
+    <string name="noti_shopping_cart_expire">Your cart will expire in a few minutes</string>
+    <string name="noti_claim_savings">Flash Sales claim your savings</string>
+    <string name="noti_cart_expired">Your shopping cart has expired</string>
+    <string name="noti_countinue_shopping">Would you like to continue shopping?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="error_occured">An error occured please try again.</string>
+    <string name="loading_products">Loading products...</string>
+    <string name="updating_account">Updating your account information</string>
+    <string name="shipping_delivery">Shipping And Deliver</string>
+    <string name="returns_refunds">Returns And Refunds</string>
+    <string name="pricing_payments">Pricing And Payments</string>
+    <!-- FAQ-->
+
+    <string name="how_does_this_work">How does this work</string>
+    <string name="how_does_this_work_content">
+        Every night at 00:00  new products are featured on our app and  website.
+        The offers are valid for 24 hours, or while stocks last. After ordering the product on Flash Sales
+        the product will be delivered.</string>
+    <string name="missed_deal">I missed a deal. Can I still get it?</string>
+    <string name="missed_deal_content">No. Once a deal expires or sells out the promotion is over. Period. We may offer it again at a later date.</string>
+    <string name="question_product">I have a question about the product</string>
+    <string name="question_product_content">What we do know can be found under "specifications" on the product page.
+        If you need even more info, grab that model name and number and do some Google PI work.</string>
+    
+   <string name="customer_support">Do I get normal customer service?</string>
+   <string name="customer_support_content">Nope.You get the best customer service this side of Indian call centres.
+       If you have a question, comment, change of heart or faulty unit, fire off a mail to [email]
+       and a friendly little boffin will write you back sharpish.</string>
+
+    <string name="warranty">Are my purchases under warranty?</string>
+    <string name="warranty_content">Yes, but mostly not by us. Almost every product is covered by the warranty provided by the manufacturer.
+        But if your precious new toy breaks, it's easiest to get in touch with us and we'll have them contact you.</string>
+
+    <string name="product_not_work">My product does not work</string>
+    <string name="product_not_work_content">Please contact our customer support at [2mail] an we can begin the refund process.</string>
+
+    <string name="how_can_refund">How can I return a product?</string>
+    <string name="how_can_refund_content">Email our customer service department and those little beauties will be happy to talk you out of it. If that does not work.
+        They will sort something out. If you really want to return the product be sure to do so within 5 days of receipt of the item at the delivery address. You will be requested to supply your order number, the name of the product you are returning, and the detailed problem with the item. We will respond with a return authorisation.
+        Because we are not likely to have a replacement in stock. You should be prepared for a refund-only option. </string>
+
+    <string name="damaged_arrivale">My order was damaged upon arrival. What can I do?</string>
+    <string name="damaged_arrivale_content">Please contact customer support so we can start the refund policy</string>
+
+    <string name="shipping_how_long">How long will delivery take?</string>
+    <string name="shipping_how_long_content">How long is a piece of string? It all depends on the product. We generally aim to get you your stuff in 5 - 10 working days, but it can take longer.After ordering, processing and preparing your order we will send you a tracking number that you can use to see where your goodies are.</string>
+    <!-- FAQ-->
+
+    <string name="shipping"><![CDATA[<b>PROCESSING AND SHIPPING</b>
+
+    <br>
+       <p> Orders will be processed within 3-7 business days! Shipment time will be between 2-5 business days depending on your location.
+       </p>
+       <br>
+        <b>RETURNS AND EXCHANGES</b>
+        <br>
+        <p>If there is absolutely anything wrong with your order, please do not hesitate to shoot us an email at livemerakishop@gmail.com and we will help you out right away!
+        </p>
+        <br>
+        <b>CUSTOMER SERVICE</b><br>
+        <p>Our helpful customer service department is committed to assist you in every way. If you have a question or problem with your order, please email us at livemerakishop@gmail.com 24 hours a day, 7 days a week!
+        </p>
+       <br>
+        <ul>
+          <li><b>30 DAYS RETURN</b></li>
+          <li><b>12 MONTH WARRANTY</b></li>
+          <li><b>BEST PRICE GUARANTEE</b></li>
+          <li><b>Free international shipping.</b></li>
+         </ul>
+      ]]>
+    </string>
+    <string name="item_specs">Item Specifcations</string>
+    <string name="description">Description</string>
+    <string name="shipping_info">Shipping Information</string>
+    <string name="title_activity_checout">ChecoutActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <!--
+                Add menu items here
+                Menu items with icon and Title
+        -->
+        <item
+            android:id="@+id/nav_flashsales"
+            android:title="@string/flash_sales" />
+        <item
+            android:id="@+id/nav_under150"
+            android:title="@string/under150" />
+        <item
+            android:id="@+id/nav_under300"
+            android:title="@string/under300" />
+
+        <item
+            android:id="@+id/nav_under500"
+            android:title="@string/under500" />
+
+        <item
+            android:id="@+id/nav_under1000"
+            android:title="@string/under1000" />
+
+
+
+        <item
+            android:id="@+id/nav_under2500"
+            android:title="@string/under2500" />
+
+        <item android:id="@+id/nav_faq"
+            android:title="@string/faq"></item>
+    </group>
+</menu>

@@ -1,0 +1,56 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/orange</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@android:color/white</item>
+    </style>
+
+    <style name="TextViewMain">
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+    <style name="TextViewRush">
+        <item name="android:background">@android:color/darker_gray</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:padding">3dp</item>
+    </style>
+
+    <style name="TextViewProfile">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="BuyButton">
+        <item name="android:background">@color/orange</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:drawableLeft">@drawable/ic_shopping_addtocart</item>
+    </style>
+
+    <style name="TextTimer">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="CounterOverFlow" parent="TextAppearance.Design.Counter.Overflow">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@android:color/holo_red_light</item>
+    </style>
+
+
+
+</resources>
