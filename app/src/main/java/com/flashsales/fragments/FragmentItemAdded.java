@@ -3,6 +3,7 @@ package com.flashsales.fragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +13,9 @@ import android.widget.TextView;
 
 import com.flashsales.R;
 import com.flashsales.datamodel.Product;
+import com.squareup.picasso.Picasso;
 
-public class FragmentItemAdded extends Fragment {
+public class FragmentItemAdded extends DialogFragment {
 
     private Product product;
     private final static String KEY_PRODUCT = "product";
@@ -44,8 +46,12 @@ public class FragmentItemAdded extends Fragment {
         TextView tvProduct = (TextView)rootView.findViewById(R.id.tv_item_added);
         TextView tvSaved = (TextView)rootView.findViewById(R.id.tv_saved);
 
-        //Picasso.with(getContext()).load(product.getImagePaths().get(0)).into(imProduct);
-        tvSaved.setText(getContext().getString(R.string.you_saved)+" "+product.getDiscount());
+        Picasso.with(getContext()).load(product.getImages().get(0)).into(imProduct);
+
+        tvProduct.setText(product.getName());
+
+        int discount = Integer.parseInt(product.getRetailPrice()) - Integer.parseInt(product.getPrice());
+        tvSaved.setText(getContext().getString(R.string.you_saved)+" "+discount);
         return rootView;
     }
 

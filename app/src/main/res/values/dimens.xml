@@ -1,5 +1,6 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="paddintgTop">8dp</dimen>
     <dimen name="padding">4dp</dimen>
     <dimen name="padding_child">5dp</dimen>
 </resources>

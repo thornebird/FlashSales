@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -65,8 +67,6 @@ public class FragmentProducts extends Fragment implements View.OnClickListener {
 
         View view = inflater.inflate(R.layout.fragment_products_grid, container, false);
         RecyclerView rv = (RecyclerView) view.findViewById(R.id.rv);
-       // rv.setItemAnimator(new DefaultItemAnimator());
-      //  rv.addItemDecoration(new DividerItemDecoration(getActivity().getBaseContext(), LinearLayoutManager.VERTICAL));
         if(products!=null && products.size()!=0) {
             adapterRecyclerView = new AdapterRecyclerView(getActivity().getBaseContext(), R.layout.row_product, products, new AdapterRecyclerView.ClickListener() {
                 @Override
@@ -83,13 +83,23 @@ public class FragmentProducts extends Fragment implements View.OnClickListener {
                 public void onCartItemAdded(Product product) {
 
                 }
+
+                @Override
+                public void onFavoruriteProductDelete(Product product) {
+
+                }
             });
         }
 
         rv.setAdapter(adapterRecyclerView);
         rv.setLayoutManager(new GridLayoutManager(getActivity().getBaseContext(), 2));
-        rv.setNestedScrollingEnabled(false);
 
+
+
+
+       /* FragmentTopSales fragmentTopSales = FragmentTopSales.newInstance();
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.add(R.id.frameLayout,fragmentTopSales).commit();*/
 
 
         return view;

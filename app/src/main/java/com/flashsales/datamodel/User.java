@@ -4,12 +4,13 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class User implements Parcelable{
-    private User user;
+    //private User user;
     private String name;
     private String email;
     private String gender;
     private String password;
     private String imageFb;
+    private boolean loggedIn;
    /* public ShippingAddress shippingAddress;*/
 
 
@@ -57,21 +58,23 @@ public class User implements Parcelable{
     public void setPassword(String password) {
         this.password = password;
     }
-/* //public ShippingAddress getShippingAddress() {
-        return shippingAddress;
-    }*/
 
-    /*public void setShippingAddress(ShippingAddress shippingAddress) {
-        this.shippingAddress = shippingAddress;
-    }*/
 
-    public User getUser() {
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
+    }
+
+    /*public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
-    }
+    }*/
 
     public String getImageFb() {
         return imageFb;
@@ -101,8 +104,8 @@ public class User implements Parcelable{
         dest.writeString(this.name);
         dest.writeString(this.email);
         dest.writeString(this.gender);
-        dest.writeParcelable(user,flags);
         dest.writeString(this.password);
+        dest.writeByte((byte) (loggedIn ? 1 : 0));
     }
 
     public User(Parcel in){
@@ -110,6 +113,6 @@ public class User implements Parcelable{
         this.email = in.readString();
         this.gender = in.readString();
         this.password = in.readString();
-        this.user= (User)in.readParcelable(User.class.getClassLoader());
+        loggedIn = in.readByte() != 0;
     }
 }

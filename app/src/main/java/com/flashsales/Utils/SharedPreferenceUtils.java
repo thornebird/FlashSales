@@ -2,11 +2,15 @@ package com.flashsales.Utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
 
+import com.facebook.share.Share;
 import com.flashsales.datamodel.ShippingAddress;
 import com.flashsales.datamodel.User;
 
 import java.io.UTFDataFormatException;
+
+import okhttp3.internal.Util;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -19,12 +23,17 @@ public class SharedPreferenceUtils {
     }
 
     public void saveLogins(User user) {
+        String fbImage = "";
+        if (user.getImageFb() != null)
+            fbImage = user.getImageFb();
         SharedPreferences sharedPreferences = context.getApplicationContext().getSharedPreferences(Utils.MyPREFERENCES, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(Utils.keyName, user.getName());
         editor.putString(Utils.keyEmail, user.getEmail());
         editor.putString(Utils.keyPass, user.getPassword());
-        editor.putString(Utils.keyImage, user.getImageFb());
+        editor.putString(Utils.keyImage, fbImage);
+        editor.putString(Utils.keyGender, user.getGender());
+        editor.putBoolean(Utils.keyLoggedIn, user.isLoggedIn());
         editor.commit();
     }
 
@@ -35,14 +44,30 @@ public class SharedPreferenceUtils {
         String email = userPrefs.getString(Utils.keyEmail, "");
         String pass = userPrefs.getString(Utils.keyPass, "");
         String imageFb = userPrefs.getString(Utils.keyImage, "");
-        if (!name.equals("") && !email.equals("")) {
-            user = new User();
-            user.setName(name);
-            user.setEmail(email);
-            user.setPassword(pass);
-            user.setImageFb(imageFb);
-        }
+        String gender = userPrefs.getString(Utils.keyGender, "");
+        boolean loggedIn = userPrefs.getBoolean(Utils.keyLoggedIn, false);
+
+        user = new User();
+        user.setName(name);
+        user.setEmail(email);
+        user.setPassword(pass);
+        user.setImageFb(imageFb);
+        user.setGender(gender);
+        user.setLoggedIn(loggedIn);
+
         return user;
+    }
+
+    public void saveFirstTime(boolean isFirst) {
+        SharedPreferences prefs = context.getSharedPreferences(Utils.MyPREFERENCES, MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean(Utils.keyFirstTime, isFirst);
+        editor.commit();
+    }
+
+    public boolean isFirstTime() {
+        SharedPreferences preferences = context.getSharedPreferences(Utils.MyPREFERENCES, MODE_PRIVATE);
+        return preferences.getBoolean(Utils.keyFirstTime, true);
     }
 
     public void setCartToken(String cartToken) {
@@ -78,38 +103,57 @@ public class SharedPreferenceUtils {
         address.setTelephone(prefs.getString(Utils.keyTelephone, ""));
         address.setShippingAddress(prefs.getString(Utils.keyShippingAddress, ""));
         address.setApt(prefs.getString(Utils.keyApt, ""));
-        address.setCity(prefs.getString(Utils.keyCity,""));
-        address.setProvince(prefs.getString(Utils.keyProvince,""));
-        address.setZipCode(prefs.getString(Utils.keyZipCode,""));
-        address.setCountry(prefs.getString(Utils.keyCountry,""));
+        address.setCity(prefs.getString(Utils.keyCity, ""));
+        address.setProvince(prefs.getString(Utils.keyProvince, ""));
+        address.setZipCode(prefs.getString(Utils.keyZipCode, ""));
+        address.setCountry(prefs.getString(Utils.keyCountry, ""));
         return address;
     }
 
-    public void setCartCount(int count){
-        SharedPreferences preferences= context.getSharedPreferences(Utils.MyPREFERENCES,MODE_PRIVATE);
+    public void setCartCount(int count) {
+        SharedPreferences preferences = context.getSharedPreferences(Utils.MyPREFERENCES, MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt(Utils.keyCartCount,count);
+        editor.putInt(Utils.keyCartCount, count);
         editor.commit();
     }
 
-    public int getCartCount(){
-        SharedPreferences preferences = context.getSharedPreferences(Utils.MyPREFERENCES,MODE_PRIVATE);
-      return   preferences.getInt(Utils.keyCartCount,0);
+    public int getCartCount() {
+        SharedPreferences preferences = context.getSharedPreferences(Utils.MyPREFERENCES, MODE_PRIVATE);
+        return preferences.getInt(Utils.keyCartCount, 0);
     }
 
-    public void setTimeOut(long timeoutMills){
-        SharedPreferences prefs = context.getSharedPreferences(Utils.MyPREFERENCES,MODE_PRIVATE);
+    public void setTimeOut(long timeoutMills) {
+        SharedPreferences prefs = context.getSharedPreferences(Utils.MyPREFERENCES, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putLong(Utils.keyTimeout,timeoutMills);
+        editor.putLong(Utils.keyTimeout, timeoutMills);
         editor.commit();
     }
 
-    public long getTimeoutMills(){
-        SharedPreferences preferences = context.getSharedPreferences(Utils.MyPREFERENCES,MODE_PRIVATE);
-        return preferences.getLong(Utils.keyTimeout,0);
+    public void setFirebaseToken(String token) {
+        SharedPreferences preferences = context.getSharedPreferences(Utils.MyPREFERENCES, MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(Utils.keyFireToken, token);
+        editor.commit();
     }
 
-    public void saveFirebaseId(String id){
+    public long getTimeoutMills() {
+        SharedPreferences preferences = context.getSharedPreferences(Utils.MyPREFERENCES, MODE_PRIVATE);
+        return preferences.getLong(Utils.keyTimeout, 0);
+    }
+
+    public void setFreePrizeOffer(boolean receieved) {
+        SharedPreferences preferences = context.getSharedPreferences(Utils.MyPREFERENCES, MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(Utils.keyFreeOffer, receieved);
+        editor.commit();
+    }
+
+    public boolean recievedFreePrizeOffer() {
+        SharedPreferences preferences = context.getSharedPreferences(Utils.MyPREFERENCES, MODE_PRIVATE);
+        return preferences.getBoolean(Utils.keyFreeOffer, false);
+    }
+
+    /*public void saveFirebaseId(String id){
         SharedPreferences prefs  = context.getSharedPreferences(Utils.MyPREFERENCES,MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(Utils.keyFirebase,id);
@@ -120,4 +164,18 @@ public class SharedPreferenceUtils {
         SharedPreferences prefs =  context.getSharedPreferences(Utils.MyPREFERENCES,MODE_PRIVATE);
         return prefs.getString(Utils.keyFirebase,"");
     }
+*/
+    public void saveOrderId(String id) {
+        SharedPreferences prefs = context.getSharedPreferences(Utils.MyPREFERENCES, MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(Utils.keyFirebaseOrders, id);
+        editor.commit();
+    }
+
+    public String getOrderId() {
+        SharedPreferences prefs = context.getSharedPreferences(Utils.MyPREFERENCES, MODE_PRIVATE);
+        return prefs.getString(Utils.keyFirebaseOrders, "");
+    }
+
+
 }

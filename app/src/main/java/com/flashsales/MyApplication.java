@@ -7,6 +7,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.util.Base64;
 import android.util.Log;
+import android.view.KeyEvent;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -27,14 +28,16 @@ import com.flashsales.datamodel.User;
 
 public class MyApplication extends Application {
     private static MyApplication singleton;
+
     // private ProductsViewedDbHelper cartDbHelper;
 
     private ArrayList<ProductDisplay> displayArrayList;
+    private ArrayList<ProductDisplay> topDisplayProductSales;
     private ArrayList<Review> reviews;
     private User user;
     //private CartProduct cartProduct;
 
-    public MyApplication getInstance() {
+    public static MyApplication getInstance() {
         return singleton;
     }
 
@@ -57,6 +60,19 @@ public class MyApplication extends Application {
         }*/
 
 
+       printHashKey(this);
+       hashFromSHA1("6D:F6:1E:4E:49:D0:39:C0:57:A9:53:63:83:CE:B1:AE:83:F1:E6:BF");
+    }
+
+    public void hashFromSHA1(String sha1) {
+        String[] arr = sha1.split(":");
+        byte[] byteArr = new  byte[arr.length];
+
+        for (int i = 0; i< arr.length; i++) {
+            byteArr[i] = Integer.decode("0x" + arr[i]).byteValue();
+        }
+
+        Log.e("hash : ", Base64.encodeToString(byteArr, Base64.NO_WRAP));
     }
 
 
@@ -90,6 +106,28 @@ public class MyApplication extends Application {
             displayArrayList = new ArrayList<>();
         displayArrayList.clear();
         displayArrayList.addAll(displayList);
+        setTopDisplayProductSales();
+    }
+
+    public void setTopDisplayProductSales(){
+     if(topDisplayProductSales== null)
+         topDisplayProductSales = new ArrayList<>();
+      topDisplayProductSales.clear();
+
+      for(int i=0;i<displayArrayList.size();i++){
+          //Filter $5 price
+          if(displayArrayList.get(i).getPrice()>5){
+              topDisplayProductSales.add(displayArrayList.get(i));
+          }
+      }
+    }
+
+    public ArrayList<ProductDisplay> getTopDisplayProductSales() {
+        return topDisplayProductSales;
+    }
+
+    public void setListenerNetwork(NetworkChangeReciever.NetworkListener mlistener) {
+        NetworkChangeReciever.mListener = mlistener;
     }
 
     public ArrayList<ProductDisplay> getDisplayArrayList() {

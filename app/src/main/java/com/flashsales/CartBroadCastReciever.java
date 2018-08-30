@@ -3,18 +3,12 @@ package com.flashsales;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.job.JobScheduler;
-import android.app.job.JobService;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 
-import com.flashsales.CartActivity;
-import com.flashsales.R;
-import com.flashsales.Utils.SharedPreferenceUtils;
-import com.flashsales.Utils.Utils;
+import com.flashsales.Utils.Configs;
 
 public class CartBroadCastReciever extends BroadcastReceiver {
 
@@ -27,11 +21,13 @@ public class CartBroadCastReciever extends BroadcastReceiver {
                 0,
                 intentOpen,
                 0);
-
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+        String channelID = Configs.KEY_NOTI_CHANEL_NAME;;
+        if (BuildConfig.DEBUG) {
+            channelID =  Configs.KEY_NOTI_CHANEL_NAME_DEBUG;
+        }
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelID);
         builder.setDefaults(Notification.DEFAULT_ALL)
-                .setSmallIcon(R.drawable.ic_account_circle)
+                .setSmallIcon(R.drawable.logo)
                 .setWhen(System.currentTimeMillis())
                 .setContentTitle(context.getString(R.string.noti_claim_savings))
                 .setContentText(context.getString(R.string.noti_shopping_cart_expire))

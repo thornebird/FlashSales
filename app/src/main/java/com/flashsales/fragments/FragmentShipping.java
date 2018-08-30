@@ -4,14 +4,21 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -27,13 +34,19 @@ public class FragmentShipping extends Fragment implements View.OnClickListener {
     private MyApplication myApplication;
     private ArrayList<EditText> editTexts;
     private ShippingAddress address;
+    private ConstraintLayout frame;
+    private final static String KEY_SHIPPING_PRICE = "keyShippingPrice";
+   // private boolean isFreeShipping;
+    private double price;
+
     // private String fullName;
     public FragmentShipping() {
     }
 
-    public static FragmentShipping newInstance() {
+    public static FragmentShipping newInstance(double shippingPrice) {
         FragmentShipping fragmentShipping = new FragmentShipping();
         Bundle args = new Bundle();
+        args.putDouble(KEY_SHIPPING_PRICE,shippingPrice);
         fragmentShipping.setArguments(args);
         return fragmentShipping;
     }
@@ -57,6 +70,9 @@ public class FragmentShipping extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle args = getArguments();
+       // isFreeShipping = args.getBoolean(KEY_FREE_SHIPPING);
+        price = args.getDouble(KEY_SHIPPING_PRICE);
         editTexts = new ArrayList<>();
         SharedPreferenceUtils prefs = new SharedPreferenceUtils(getActivity());
         address = prefs.getAddress();
@@ -74,6 +90,7 @@ public class FragmentShipping extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_shipping, container, false);
         //etFullName = (EditText) rootView.findViewById(R.id.et_fullname);
+        frame = (ConstraintLayout) rootView.findViewById(R.id.frame_content);
         etShipping = (TextInputEditText) rootView.findViewById(R.id.et_shipping);
         etApt = (TextInputEditText) rootView.findViewById(R.id.et_apt);
         etCountry = (TextInputEditText) rootView.findViewById(R.id.et_country);
@@ -88,8 +105,29 @@ public class FragmentShipping extends Fragment implements View.OnClickListener {
         editTexts.add(etCity);
         editTexts.add(etPostcode);
         editTexts.add(etPhone);
-        Button btnSave = (Button) rootView.findViewById(R.id.btn_save);
-        btnSave.setOnClickListener(this);
+
+        TextView tvShippingPrice = (TextView) rootView.findViewById(R.id.tv_shippig_price);
+        TextView tvContinue = (TextView)rootView.findViewById(R.id.tv_continue);
+
+        /*Button btnSave = (Button) rootView.findViewById(R.id.btn_save);
+        btnSave.setOnClickListener(this);*/
+
+        ConstraintLayout layoutContinue = (ConstraintLayout) rootView.findViewById(R.id.layout_continue);
+        layoutContinue.setOnClickListener(this);
+
+      //  ConstraintLayout frameDiscount = (ConstraintLayout) rootView.findViewById(R.id.layout_discount_claimed);
+        ImageView ivDiscount =  (ImageView)rootView.findViewById(R.id.iv_discount);
+
+        if(price == 0.0){
+            Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
+            ivDiscount.startAnimation(animation);
+            tvShippingPrice.startAnimation(animation);
+
+
+        }else if (price>0.0){
+            tvShippingPrice.setText(getString(R.string.currency)+price+"");
+            tvContinue.setText(getString(R.string.confirm_address));
+        }
 
         initAddress();
        /* if(!fullName.equals(""))
@@ -106,15 +144,17 @@ public class FragmentShipping extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_save:
+            case R.id.layout_continue:
                 if (checkAllCompleted(editTexts) && mListener != null) {
                     mListener.onAddressSave(shippingAddress());
+                } else {
+                    Snackbar.make(frame, getString(R.string.shipping_fields_empty), Snackbar.LENGTH_SHORT).show();
                 }
                 break;
         }
     }
 
-    private void initAddress(){
+    private void initAddress() {
         etShipping.setText(address.getShippingAddress());
         etApt.setText(address.getApt());
         etCity.setText(address.getCity());
@@ -142,10 +182,10 @@ public class FragmentShipping extends Fragment implements View.OnClickListener {
         for (int i = 0; i < editTexts.size(); i++) {
             Log.d("log", editTexts.get(i).toString());
             if (editTexts.get(i).getText().length() < 1) {
-                    isFilled = false;
-                    editTexts.get(i).setError(getString(R.string.field_required));
-                }
+                isFilled = false;
+                editTexts.get(i).setError(getString(R.string.field_required));
             }
+        }
 
         return isFilled;
     }

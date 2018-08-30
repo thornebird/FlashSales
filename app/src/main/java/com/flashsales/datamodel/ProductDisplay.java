@@ -18,7 +18,8 @@ public class ProductDisplay implements Parcelable{
     private double price;
     @SerializedName("retailPrice")
     private double retailPrice;
-
+    private double fakeRating;
+    private boolean isFree;
     public ProductDisplay(){}
 
     public ProductDisplay(String name,String brand,String shortName,String image,double price,double retailPrice){
@@ -78,6 +79,21 @@ public class ProductDisplay implements Parcelable{
         this.retailPrice = retailPrice;
     }
 
+    public double getFakeRating() {
+        return fakeRating;
+    }
+    public boolean isFree() {
+        return isFree;
+    }
+
+    public void setFree(boolean free) {
+        isFree = free;
+    }
+
+    public void setFakeRating(double fakeRating) {
+        this.fakeRating = fakeRating;
+    }
+
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         @Override
         public Object createFromParcel(Parcel source) {
@@ -97,6 +113,8 @@ public class ProductDisplay implements Parcelable{
         this.image = source.readString();
         this.price = source.readDouble();
         this.retailPrice =source.readDouble();
+        this.fakeRating = source.readDouble();
+        isFree = source.readByte() != 0;
     }
 
     /**
@@ -129,5 +147,7 @@ public class ProductDisplay implements Parcelable{
         dest.writeString(this.image);
         dest.writeDouble(this.price);
         dest.writeDouble(this.retailPrice);
+        dest.writeDouble(this.fakeRating);
+        dest.writeByte((byte) (isFree ? 1 : 0));
     }
 }

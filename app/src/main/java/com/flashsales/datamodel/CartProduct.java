@@ -13,13 +13,12 @@ public class CartProduct implements Parcelable {
     @SerializedName("expiresOn")
     private String expiresOn;
     @SerializedName("products")
-    private ArrayList<Product> products;
+    private ArrayList<Product> products = new ArrayList<>();
     private String expiresInMinutes;
-    private int salePrice;
-    private int retailPrice;
+    private double salePrice;
+    private double retailPrice;
 
-    public CartProduct() {
-    }
+    public CartProduct() {}
 
     public CartProduct(String token, String expiresOn) {
         this.expiresOn = expiresOn;
@@ -70,19 +69,19 @@ public class CartProduct implements Parcelable {
         }
     }
 
-    public int getSalePrice() {
+    public double getSalePrice() {
         return salePrice;
     }
 
-    public void setSalePrice(int salePrice) {
+    public void setSalePrice(double salePrice) {
         this.salePrice = salePrice;
     }
 
-    public int getRetailPrice() {
+    public double getRetailPrice() {
         return retailPrice;
     }
 
-    public void setRetailPrice(int retailPrice) {
+    public void setRetailPrice(double retailPrice) {
         this.retailPrice = retailPrice;
     }
 
@@ -113,14 +112,18 @@ public class CartProduct implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.expiresOn);
         dest.writeString(this.token);
-        dest.writeList(this.products);
+        dest.writeTypedList(this.products);
         dest.writeString(this.expiresInMinutes);
+        dest.writeDouble(this.salePrice);
+        dest.writeDouble(this.retailPrice);
     }
 
     public CartProduct(Parcel in) {
         this.token = in.readString();
         this.expiresOn = in.readString();
-        this.products = in.readArrayList(null);
+        in.readTypedList(products,Product.CREATOR);
         this.expiresInMinutes = in.readString();
+        this.salePrice = in.readDouble();
+        this.retailPrice = in.readDouble();
     }
 }

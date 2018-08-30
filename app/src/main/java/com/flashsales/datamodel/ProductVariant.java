@@ -21,6 +21,8 @@ public class ProductVariant implements Parcelable {
         this.isSet = false;
     }
 
+    public ProductVariant(){}
+
     public String getVariantParent() {
         return variantParent;
     }
@@ -80,8 +82,8 @@ public class ProductVariant implements Parcelable {
     }
 
     public ProductVariant(Parcel in) {
-        this.variantValues = in.readArrayList(null);
         this.variantParent = in.readString();
+        this.variantValues = in.readArrayList(Stock.class.getClassLoader());
         isSet = in.readByte() != 0;
         setValue =  in.readString();
     }

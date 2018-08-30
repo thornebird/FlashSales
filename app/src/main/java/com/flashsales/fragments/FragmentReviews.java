@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
 
 import java.util.ArrayList;
 
@@ -24,15 +25,18 @@ import com.flashsales.datamodel.FlashSaleTimer;
 
 public class FragmentReviews extends Fragment implements  AdapterRecyclerView.ClickListener {
 
-    private final static String KEY_LIST = "list";
+    private final static String KEY_LIST = "keyList";
+    private final static String KEY_RATING= "keyRating";
     private ArrayList<Review> reviewArrayList;
+    private double rating;
     private FlashSaleTimer timer ;
     private MyApplication myApplication;
 
-    public static FragmentReviews newInstance(ArrayList<Review>reviews){
+    public static FragmentReviews newInstance(ArrayList<Review>reviews,double rating){
         FragmentReviews fragmentReviews =  new FragmentReviews();
         Bundle args = new Bundle();
         args.putParcelableArrayList(KEY_LIST,reviews);
+        args.putDouble(KEY_RATING,rating);
         fragmentReviews.setArguments(args);
         return fragmentReviews;
     }
@@ -45,12 +49,11 @@ public class FragmentReviews extends Fragment implements  AdapterRecyclerView.Cl
        // reviewArrayList = myApplication.getReviews();
         Bundle args = getArguments();
         reviewArrayList = args.getParcelableArrayList(KEY_LIST);
+        rating = args.getDouble(KEY_RATING);
         timer = new FlashSaleTimer();
-        Log.d("FragmentReviews","onCreate");
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.d("FragmentReviews","onCreateView");
         View view = inflater.inflate(R.layout.fragment_reviews,container,false);
 
         RecyclerView rv = (RecyclerView)view.findViewById(R.id.rv);
@@ -61,6 +64,9 @@ public class FragmentReviews extends Fragment implements  AdapterRecyclerView.Cl
         rv.setLayoutManager(lm);
         rv.setAdapter(new AdapterRecyclerView(getActivity().getBaseContext(),R.layout.item_review,reviewArrayList,this));
 
+        RatingBar rb= (RatingBar)view.findViewById(R.id.rb);
+        float ratingFlaot  = Float.valueOf(String.valueOf(rating));
+        rb.setRating(ratingFlaot);
 
       /*  TextView tvTimer = (TextView) view.findViewById(R.id.tv_timer);
         timer.updateTimerMidnight(tvTimer);*/
@@ -81,6 +87,11 @@ public class FragmentReviews extends Fragment implements  AdapterRecyclerView.Cl
 
     @Override
     public void onCartItemAdded(Product product) {
+
+    }
+
+    @Override
+    public void onFavoruriteProductDelete(Product product) {
 
     }
 }

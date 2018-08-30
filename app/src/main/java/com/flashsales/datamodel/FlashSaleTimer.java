@@ -31,6 +31,9 @@ public class FlashSaleTimer {
 
     }
 
+
+
+
     private String formatLong(long toFormat) {
         if (toFormat > 9) {
             return Long.toString(toFormat);
@@ -47,7 +50,7 @@ public class FlashSaleTimer {
         startTimer(endMills, tv, message);
     }
 
-    private void startTimer(long endMills, final TextView tv, final String message) {
+    public void startTimer(long endMills, final TextView tv, final String message) {
         new CountDownTimer(endMills, 1000) {
 
             public void onTick(long millisUntilFinished) {
@@ -73,4 +76,6 @@ public class FlashSaleTimer {
 
         }.start();
     }
+
+
 }

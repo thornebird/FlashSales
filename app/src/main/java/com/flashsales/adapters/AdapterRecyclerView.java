@@ -2,6 +2,7 @@ package com.flashsales.adapters;
 
 import android.content.Context;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.flashsales.datamodel.OrderObject;
+import com.flashsales.datamodel.PrizeOrderObject;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -32,13 +35,15 @@ public class AdapterRecyclerView<T> extends RecyclerView.Adapter<AdapterRecycler
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView tvName, tvDiscount, tvPrice, tvReview, tvBrand/*, tvTotalPrice*/;
+        private TextView tvName, tvDiscount, tvPrice, tvReview, tvBrand, tvSavePercentage;
         private TextView tvVariant, tvVariantPrice; /// R.layout.item_variant.xml
         private ImageView imProduct, imReview;
         private RatingBar rbReview;
-        private ImageView ivRemove,ivView;
+        private ImageView ivRemove, ivView;
         private EditText etAmount;
         private int currentState;
+        //////// Order history
+        private TextView tvOrderDate, tvAmount, tvAmountSave, tvOrderCount;
 
 
         private TextView tvVariantChosen, tvShippingCost, tvShipping, tvPriceBefore;
@@ -57,19 +62,20 @@ public class AdapterRecyclerView<T> extends RecyclerView.Adapter<AdapterRecycler
             rbReview = (RatingBar) view.findViewById(R.id.rb_review);
             /////////////// Product varaint related
             tvVariant = (TextView) view.findViewById(R.id.tv_variant);
-            // tvVariantPrice = (TextView) view.findViewById(R.id.tv_variant_price);
-            /// Cart product
+
             tvBrand = (TextView) view.findViewById(R.id.tv_brand);
 
-            //tvVariantChosen = (TextView) view.findViewById(R.id.tv_variant_chosen);
-            // tvShippingCost = (TextView) view.findViewById(R.id.tv_shipping_cost);
-            //tvShipping = (TextView) view.findViewById(R.id.tv_shipping);
+            tvSavePercentage = (TextView) view.findViewById(R.id.tv_save_percentage);
             tvPriceBefore = (TextView) view.findViewById(R.id.tv_price_before);
-        //    tvTotalPrice = (TextView) view.findViewById(R.id.tv_total_price);
             ivRemove = (ImageView) view.findViewById(R.id.tv_remove);
             //ivAdd = (ImageView)view.findViewById(R.id.iv_add);
             etAmount = (EditText) view.findViewById(R.id.et_amount);
-            ivView =(ImageView)view.findViewById(R.id.iv_view);
+            ivView = (ImageView) view.findViewById(R.id.iv_view);
+            ///// order history items
+            tvOrderDate = (TextView) view.findViewById(R.id.tv_order_date);
+            tvAmount = (TextView) view.findViewById(R.id.tv_amount);
+            tvAmountSave = (TextView) view.findViewById(R.id.tv_amount_saved);
+            tvOrderCount = (TextView) view.findViewById(R.id.tv_count);
         }
 
     }
@@ -90,11 +96,11 @@ public class AdapterRecyclerView<T> extends RecyclerView.Adapter<AdapterRecycler
 
     @Override
     public void onBindViewHolder(AdapterRecyclerView.ViewHolder holder, final int position) {
-      final Object object = list.get(position);
+        final Object object = list.get(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            //    Object object = list.get(position);
+                //    Object object = list.get(position);
                 if (mClickListener != null)
                     mClickListener.onItemAdapterClick(object, position, v);
             }
@@ -110,8 +116,14 @@ public class AdapterRecyclerView<T> extends RecyclerView.Adapter<AdapterRecycler
             setProductVaritants(holder, object, position);
         } else if (object instanceof Product && layoutResId == R.layout.item_cart) {
             setCartlistItem(holder, object, position);
-        } else  if(object instanceof Product && layoutResId == R.layout.item_viewed_product){
-            setViewedProduct(holder,object,position);
+        } else if (object instanceof Product && layoutResId == R.layout.item_viewed_product) {
+            setViewedProduct(holder, object, position);
+        } else if (object instanceof OrderObject && layoutResId == R.layout.item_order_history) {
+            setOrderHistoryItem(holder, object, position);
+        } else if (object instanceof PrizeOrderObject && layoutResId == R.layout.item_order_history) {
+            setPrizeOrderHistoryItem(holder, object, position);
+        } else if (object instanceof Product && layoutResId == R.layout.item_product_orderinformation) {
+            setOrderHistoryProducts(holder, object, position);
         }
     }
 
@@ -121,29 +133,52 @@ public class AdapterRecyclerView<T> extends RecyclerView.Adapter<AdapterRecycler
         return list.size();
     }
 
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
     private void setProductDisplayInfo(ViewHolder holder, Object object) {
         Log.i("display info", "set info");
         ProductDisplay productDisplay = ProductDisplay.class.cast(object);
         holder.tvName.setText(productDisplay.getShortName());
         String salePrice = context.getString(R.string.sale_price);
         salePrice += " " + context.getString(R.string.currency);
-        holder.tvPrice.setText(salePrice + " " + productDisplay.getPrice() + "");
+        holder.tvPrice.setText(salePrice + productDisplay.getPrice() + "");
 
         String retailPrice = context.getString(R.string.retail_price);
         retailPrice += " " + context.getString(R.string.currency);
 
-        holder.tvDiscount.setText(retailPrice + "" + productDisplay.getRetailPrice() + "");
+        holder.tvDiscount.setText(retailPrice + productDisplay.getRetailPrice() + "");
+
+        Double savePercentage = (productDisplay.getPrice() / productDisplay.getRetailPrice()) * 100;
+        savePercentage = 100 - savePercentage;
+        int i = savePercentage.intValue();
+
+        holder.tvSavePercentage.setText(context.getString(R.string.save) + " " + i + "%");
+        Log.d("savePercentage", savePercentage + "");
         // holder.tvDiscount.setText(productDisplay.getDiscount());
         //   holder.tvOrderCount.setText(productDisplay.getCartCount() + " " + context.getResources().getString(R.string.bought_this));
-        Picasso.with(context).load(productDisplay.getImage()).into(holder.imProduct);
+       if(productDisplay.getImage()!=null) {
+           Picasso.with(context).load(productDisplay.getImage()).fit().centerCrop().
+                   error(R.drawable.ic_hourglass_empty).placeholder(R.drawable.logo).into(holder.imProduct);
+       }else{
+           Drawable drawable = context.getDrawable(R.drawable.logo);
+           holder.imProduct.setImageDrawable(drawable);
+       }
     }
 
     private void setReviewInfo(ViewHolder holder, Object object) {
         Review review = Review.class.cast(object);
         holder.tvName.setText(review.getReviewerName());
         holder.tvReview.setText(review.getReview());
-        Picasso.with(context).load(review.getImageId()).into(holder.imReview);
-        // Double rating = review.getRating();
+        if(review.getImageId()!= 0) {
+            Picasso.with(context).load(review.getImageId()).fit().centerCrop().error(R.drawable.ic_hourglass_empty).placeholder(R.drawable.logo).into(holder.imReview);
+        }else{
+            Drawable drawable = context.getDrawable(R.drawable.logo);
+            holder.imProduct.setImageDrawable(drawable);
+        }
+        // Double rating = review.getFakeRating();
         Float rating = (float) review.getRating();
         holder.rbReview.setRating(rating);
     }
@@ -160,16 +195,21 @@ public class AdapterRecyclerView<T> extends RecyclerView.Adapter<AdapterRecycler
 
     private void setCartlistItem(ViewHolder holder, Object object, final int position) {
         final Product product = Product.class.cast(object);
-        //holder.tvVariantChosen.setText("Tv variant chosen");
         holder.tvName.setText(product.getName());
         holder.tvBrand.setText(product.getBrand());
-        //  holder.tvShipping.setText("shiping");
-        // holder.tvShippingCost.setText("tv shipping cost");
         String salePrice = context.getResources().getString(R.string.sale_price);
-        String retailPrice =  context.getString(R.string.retail_price);
-        holder.tvPrice.setText(salePrice+" "+product.getStock()+"x R" + product.getPrice());
-        holder.tvPriceBefore.setText(retailPrice+ " R" + (product.getRetailPrice()) + "");
+        String retailPrice = context.getString(R.string.retail_price);
+        holder.tvPrice.setText(salePrice + " " + product.getStock() + "x " + context.getString(R.string.currency) + product.getPrice());
+        holder.tvPriceBefore.setText(retailPrice + " " + context.getString(R.string.currency) + (product.getRetailPrice()) + "");
         holder.tvPriceBefore.setPaintFlags(holder.tvPriceBefore.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+        int price = Integer.parseInt(product.getPrice());
+        int retailPriceCalc = Integer.parseInt(product.getRetailPrice());
+        int percent = (price * 100) / retailPriceCalc;
+        percent = 100 - percent;
+        holder.tvSavePercentage.setText(context.getString(R.string.save) + " " + percent + "%");
+
+
         holder.ivRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,32 +219,98 @@ public class AdapterRecyclerView<T> extends RecyclerView.Adapter<AdapterRecycler
         });
 
         int total = product.getStock() * Integer.valueOf(product.getPrice());
-        holder.etAmount.setText("R" +total);
-        Picasso.with(context).load(product.getImage()).into(holder.imProduct);
+
+        holder.etAmount.setText(context.getString(R.string.currency) + total);
+        if (product.getImage() != null) {
+            Picasso.with(context).load(product.getImage()).fit().centerCrop().fit().error(R.drawable.ic_hourglass_empty)
+                    .placeholder(R.drawable.logo).into(holder.imProduct);
+        }else{
+            Drawable drawable = context.getDrawable(R.drawable.logo);
+            holder.imProduct.setImageDrawable(drawable);
+        }
     }
 
 
-    private void setViewedProduct(ViewHolder holder, final Object object, final int position){
-        Product product = (Product)object;
-        Picasso.with(context).load(product.getImage()).into(holder.imProduct);
+    private void setViewedProduct(ViewHolder holder, final Object object, final int position) {
+        final Product product = (Product) object;
+        if (product.getImage() != null) {
+            Picasso.with(context).load(product.getImage()).fit().centerCrop().error(R.drawable.ic_hourglass_empty)
+                    .placeholder(R.drawable.logo).into(holder.imProduct);
+        } else {
+            Drawable drawable = context.getDrawable(R.drawable.logo);
+            holder.imProduct.setImageDrawable(drawable);
+        }
+        String currency = context.getString(R.string.currency);
         holder.tvName.setText(product.getName());
         holder.tvBrand.setText(product.getBrand());
-        holder.tvPriceBefore.setText(product.getRetailPrice());
-        holder.tvPrice.setText(product.getPrice());
+        String retail = context.getString(R.string.retail_price);
+        String sale = context.getString(R.string.sale_price);
+        holder.tvPriceBefore.setText(retail + " " + currency + product.getRetailPrice());
+        holder.tvPrice.setText(sale + " " + currency + product.getPrice());
+
+        int price = Integer.parseInt(product.getPrice());
+        int retailPrice = Integer.parseInt(product.getRetailPrice());
+        int percent = (price * 100) / retailPrice;
+        percent = 100 - percent;
+        holder.tvSavePercentage.setText(context.getString(R.string.save) + " " + percent + "%");
         holder.ivView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mClickListener!=null)
-                    mClickListener.onItemAdapterClick(object,position,v);
+                if (mClickListener != null)
+                    mClickListener.onItemAdapterClick(object, position, v);
+            }
+        });
+        holder.ivRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mClickListener != null)
+                    mClickListener.onFavoruriteProductDelete(product);
             }
         });
     }
 
+    private void setOrderHistoryItem(ViewHolder holder, final Object object, final int position) {
+        final OrderObject order = (OrderObject) object;
+        String date = dateFormatted(order.getPaymentObject().getPaypalResponse().getCreatedTime());
+        holder.tvOrderDate.setText(date);
+        holder.tvAmount.setText(context.getString(R.string.amount_paid) + " " + context.getString(R.string.currency) + order.getCartProduct().getSalePrice() + "");
+        double amount = order.getCartProduct().getRetailPrice() - order.getCartProduct().getSalePrice();
+        holder.tvAmountSave.setText(context.getString(R.string.amount_saved) + " " + context.getString(R.string.currency) + amount);
+    }
+
+    private void setPrizeOrderHistoryItem(ViewHolder holder, final Object object, final int position) {
+        final PrizeOrderObject order = (PrizeOrderObject) object;
+        String date = dateFormatted(order.getPaymentObject().getPaypalResponse().getCreatedTime());
+        holder.tvOrderDate.setText(date);
+        holder.tvAmount.setText(context.getString(R.string.amount_paid) + " " + context.getString(R.string.currency) + order.getFreeProduct().getShippingPrice() + "");
+        holder.tvAmountSave.setText(context.getString(R.string.amount_saved) + " " + context.getString(R.string.currency) + order.getFreeProduct().getRetailPrice());
+    }
+
+
+    private void setOrderHistoryProducts(ViewHolder holder, final Object object, int position) {
+        Product product = (Product) object;
+
+        holder.tvName.setText(product.getName());
+        holder.tvBrand.setText(product.getBrand());
+        holder.tvPrice.setText(context.getString(R.string.currency) + product.getPrice() + "");
+        holder.tvOrderCount.setText(context.getString(R.string.items_ordered) + " " + product.getStock() + "");
+        if (product.getImage() != null) {
+            Picasso.with(context).load(product.getImage()).fit().centerCrop().placeholder(R.drawable.logo).error(R.drawable.ic_hourglass_empty).into(holder.imProduct);
+        } else {
+
+            Drawable drawable = context.getDrawable(R.drawable.logo);
+            holder.imProduct.setImageDrawable(drawable);
+        }
+
+    }
+
     public void updateList(ArrayList<T> updatedList) {
-        /*list.clear();
-        list.addAll(updatedList);*/
         this.list = updatedList;
 
+    }
+
+    private String dateFormatted(String date) {
+        return date.replace("T", " ").replace("Z", "");
     }
 
 
@@ -214,6 +320,8 @@ public class AdapterRecyclerView<T> extends RecyclerView.Adapter<AdapterRecycler
         public void onCartItemDelted(Product product, int layoutPosition);
 
         public void onCartItemAdded(Product product);
+
+        public void onFavoruriteProductDelete(Product product);
     }
 
 }

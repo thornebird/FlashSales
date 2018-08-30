@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.flashsales.ProgressAlert;
 import com.flashsales.R;
+import com.flashsales.Utils.Configs;
 import com.flashsales.Utils.SharedPreferenceUtils;
 import com.flashsales.datamodel.User;
 import com.google.firebase.database.DataSnapshot;
@@ -24,17 +25,15 @@ public class UserDao {
         return mInstance;
     }
 
-    public void setmDatabase(Context context, User user) {
+    public void addUserToDb(Context context, User user) {
         final ProgressAlert progressAlert = new ProgressAlert(context, context.getResources().getString(R.string.loading),
                 context.getResources().getString(R.string.registeration_process));
 
-        mDatabase = FirebaseDatabase.getInstance().getReference("users");
-        //need to save to prefs
-        String userId = mDatabase.push().getKey();
-        SharedPreferenceUtils prefs = new SharedPreferenceUtils(context);
-        prefs.saveFirebaseId(userId);
-        mDatabase.child(userId).setValue(user);
-        mDatabase.child(userId).addValueEventListener(new ValueEventListener() {
+        mDatabase = FirebaseDatabase.getInstance().getReference(Configs.KEY_USER_FIREBASE_TABLE);
+
+        String key = mDatabase.push().getKey();
+        mDatabase.child(key).setValue(user);
+        mDatabase.child(key).addValueEventListener(new ValueEventListener() {
             @Override()
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
@@ -52,18 +51,18 @@ public class UserDao {
     }
 
 
-    public void updateUser(final Context context, User user) {
-        if (user == null)
-            return;
-        // g et i d from prefs set new values
-        SharedPreferenceUtils prefs = new SharedPreferenceUtils(context);
-        String id = prefs.getFirebaseId();
-        mDatabase = FirebaseDatabase.getInstance().getReference("users");
-        mDatabase.child(id).child("name").setValue(user.getName());
-        mDatabase.child(id).child("email").setValue(user.getEmail());
-        mDatabase.child(id).child("password").setValue(user.getEmail());
-        mDatabase.child(id).child("gender").setValue(user.getGender());
+    private String encodeEmail(String toEncode) {
+        return toEncode.replace(".", ",");
+    }
 
+    private String decodeEmail(String toDecode) {
+        return toDecode.replace(",", ".");
+    }
+
+    public User getUser() {
+        User user = new User();
+
+        return user;
     }
 
 }

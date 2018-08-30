@@ -22,6 +22,7 @@ public class DBViewedProducts extends SQLiteOpenHelper {
     private static final String KEY_RETAIL_PRICE = "keyRetailPrice";
     private static final String KEY_PRICE = "keyPrice";
     private static final String KEY_IMAGE = "keyImage";
+    private static final String KEY_RATING = "keyRating";
 
 
     private static final String CREATE_TABLE = " CREATE TABLE " + TABLE_VIEWED_PRODUCTS + "("
@@ -30,6 +31,7 @@ public class DBViewedProducts extends SQLiteOpenHelper {
             + KEY_BRAND + " TEXT,"
             + KEY_RETAIL_PRICE + " TEXT,"
             + KEY_PRICE + " TEXT,"
+            + KEY_RATING + " TEXT,"
             + KEY_IMAGE + " TEXT)";
 
 
@@ -123,6 +125,7 @@ public class DBViewedProducts extends SQLiteOpenHelper {
                 product.setPrice(cursor.getString(cursor.getColumnIndex(KEY_PRICE)));
                 product.setRetailPrice(cursor.getString(cursor.getColumnIndex(KEY_RETAIL_PRICE)));
                 product.setImage(cursor.getString(cursor.getColumnIndex(KEY_IMAGE)));
+                product.setFakeRating(Double.valueOf(cursor.getString(cursor.getColumnIndex(KEY_RATING))));
                 products.add(product);
             }
         }
@@ -152,6 +155,7 @@ public class DBViewedProducts extends SQLiteOpenHelper {
         contentValues.put(KEY_RETAIL_PRICE,product.getRetailPrice());
         contentValues.put(KEY_PRICE,product.getPrice());
         contentValues.put(KEY_IMAGE,product.getImage());
+        contentValues.put(KEY_RATING,product.getFakeRating()+"");
         return contentValues;
     }
 

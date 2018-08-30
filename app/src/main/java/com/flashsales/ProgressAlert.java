@@ -11,16 +11,18 @@ public class ProgressAlert {
 
     public ProgressAlert(Context context, String title, String message) {
         progressDialog = new ProgressDialog(context);
-        progressDialog.setTitle(title);
-        progressDialog.setMessage(message);
+        if (!title.equals("null") || title != null || title.equals(""))
+            progressDialog.setTitle(title);
+        if (!message.equals("null") || message != null || message.equals(""))
+            progressDialog.setMessage(message);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.show();
-        progressDialog.setIcon(R.drawable.ic_account_circle);
+        progressDialog.setIcon(R.drawable.logo);
         progressDialog.setCancelable(false);
+        progressDialog.show();
     }
 
-    public void stopAlert(){
-        if(progressDialog != null){
+    public void stopAlert() {
+        if (progressDialog != null) {
             progressDialog.dismiss();
         }
     }

@@ -4,16 +4,23 @@
     <string name="sales">Sales</string>
     <string name="open">Open</string>
     <string name="closed">Closed</string>
-    <string name="currency">R</string>
+    <string name="currency">$</string>
     <string name="only">Only</string>
     <!-- Navigation-->
-    <string name="account">Account</string>
+    <string name="view_account">%1$s\'s  \n Account</string>
+    <string name="account_information_for">%1$s\'s Account</string>
     <string name="flash_sales">Flash Sales</string>
-    <string name="under150">Flash Sales Under R150</string>
-    <string name="under300">Flash Sales Under R300</string>
-    <string name="under500">Flash Sales Under R500</string>
-    <string name="under1000">Flash Sales Under R1000</string>
-    <string name="under2500">Flash Sales Under R2500</string>
+    <string name="nav_watches">Watches</string>
+    <string name="nav_earings">Earings</string>
+    <string name="nav_braclets">Bracelets</string>
+    <string name="nav_necklaces">Necklaces</string>
+    <string name="nav_sunglasses">Sunglasses</string>
+    <!-- <string name="under150">Flash Sales Under $15</string>
+    <string name="under300">Flash Sales Under $30</string>
+    <string name="under500">Flash Sales Under $50</string>
+    <string name="under1000">Flash Sales Under $100</string>
+    <string name="under2500">Flash Sales Under $250</string>
+    <string name="history">History</string>-->
     <string name="faq">FAQ</string>
     <!-- Navigation-->
 
@@ -26,7 +33,14 @@
         <item>Reviews</item>
     </string-array>
 
+    <string name="share_promotion">Download Flash Sales and win a prize. I just won a </string>
+    <string name="account_flash_sales">Flash Sales Account</string>
     <string name="cart">Cart</string>
+    <string name="cart_flashsales">Flash Sales Cart</string>
+    <string name="deleted_product_favs">Deleted product from favourites</string>
+    <string name="deleted_product_viewed">Deleted product from viewed products</string>
+    <string name="error_product_viewed">Error deleting product from viewed products</string>
+    <string name="error_product_favs">Error deleting product from favourites</string>
     <string name="bought_this">Bought this</string>
     <string name="buy">Buy</string>
     <string name="sizing">Sizing</string>
@@ -37,42 +51,80 @@
     <string name="shopping_reviews">Shopping Reviews</string>
     <string name="overall">Overall</string>
     <string name="shipping_payment">Shipping and Payment</string>
-    <string name="ship_to">Ship To</string>
+    <string name="ship_to">Shipped To:</string>
     <string name="address">Address</string>
     <string name="enter_address">Enter your address</string>
     <string name="items_in_cart">Items In Cart</string>
     <string name="items">items</string>
+    <string name="items_ordered">Items ordered: </string>
+    <string name="order_on">Order made on:</string>
+    <string name="order_amount">Order amount:</string>
+    <string name="order_summary">Order summary for</string>
     <string name="remove">Delete</string>
+    <string name="remove_product">Remove this product?</string>
+    <string name="time_expired">Your prize has expired. Last chance to claim your prize.</string>
     <string name="total_price">Total price</string>
+    <string name="top_selling">top selling</string>
+    <string name="continue_one">Continue</string>
     <string name="continue_shopping">Continue Shopping</string>
+    <string name="continue_step_one">Continue to step 1</string>
+    <string name="continue_step_two">Continue to step 2</string>
+    <string name="view_order_history">View order history</string>
+    <string name="continue_to_pay">Continue To Payment</string>
+    <string name="view_product">View product</string>
     <string name="field_required">Field required too short</string>
     <string name="close">Close</string>
+    <string name="claim_prize">Claim prize</string>
     <string name="checkout">Checkout</string>
+    <string name="exit">Exit</string>
+    <string name="collect_prize">Collect your prize.</string>
     <string name="select">Select a </string>
     <string name="item_added_to_cart">Item Added To Cart</string>
+    <string name="would_you_like_checkout">Item Added To Cart. Would you like to checkout?</string>
+    <string name="would_you_like_collect_prize">Item Added To Cart. Would you like to collect your prize?</string>
     <string name="you_saved">You Saved</string>
     <string name="indicated_fields">*Indicated Fields Are Required</string>
     <string name="first_name_required">*First Name</string>
+    <string name="free_shipping">Free Shipping.</string>
+    <string name="free_prize">Free prize</string>
+    <string name="free">Free</string>
     <string name="last_name_required">*Last Name</string>
+    <string name="name_required">Name required.</string>
     <string name="shipping_address">*Shipping Address</string>
+    <string name="shipping_address_two">Shipping Address</string>h
+    <string name="shipped_to">Order was shipped to:</string>
     <string name="apartment">Apt/Suite/Unit (Optional)</string>
     <string name="country">Country</string>
-    <string name="state">Province</string>
+    <string name="choose" formatted="false">Choose a </string>
+    <string name="state">State</string>
     <string name="city">City</string>
     <string name="postcode">Postcode</string>
     <string name="phone_no">Phone</string>
     <string name="save">Save</string>
+    <string name="save_pass">Save new password.</string>
+    <string name="save_email">Save new email address.</string>
     <string name="your_cart">Your Cart</string>
     <string name="popular">Popular Flash Sales</string>
+    <string name="people_also_liked">People also liked these products:</string>
     <string name="retail_price">Retail price </string>
+    <string name="redirecting_home">Redirecting you to home page.</string>
     <string name="sale_price">Sale price</string>
-    <string name="amount">Quanitity</string>
+    <string name="sales_price_discount">Discounted price:</string>
+    <string name="amount">Amount:</string>
+    <string name="amount_saved">Amount saved:</string>
+    <string name="amount_paid">Amount paid:</string>
     <string name="add_to_cart">Add To Cart</string>
     <string name="hide_cart">Hide Cart</string>
     <string name="show_cart">Show Cart</string>
-    <string name="or">Or complete the fileds below</string>
+    <string name="or">Login | Register</string>
     <string name="register">Register</string>
     <string name="complete_fields">Complete the required fields below</string>
+    <string name="complete_steps_competition" formatted="false">Complete these %1$s steps to claim your prize.</string>
+
+    <string name="step_one_share">Step 1: Share Flash Sales.</string>
+    <string name="step_one">Step 1</string>
+    <string name="step_two">Step 2</string>
+    <string name="step_two_address">Step 2: Enter your shipping address.</string>
     <string name="promotional">Claim Your Free Item For Every New App User</string>
     <string name="first_name">First name</string>
     <string name="last_name">Last name</string>
@@ -81,45 +133,97 @@
     <string name="phone">Phone</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm password</string>
+    <string name="confirm_address">Confirm address</string>
+    <string name="confirm_exit_dialog">Are you sure you would like to exit. You will not be able to claim this prize later?</string>
     <string name="login_with_fb">Login with Facebook</string>
     <string name="error_pass_length">Password must contain 8 characters</string>
     <string name="error_pass_empty">Password cannot be empty</string>
     <string name="error_pass_no_match">Error passwords do not match</string>
     <string name="error_invalid_email">Error invalid email</string>
+    <string name="error_internet_occured">An internet error occured.</string>
     <string name="error_invalid_phone">Error invalid phone number</string>
     <string name="gender">Gender</string>
+    <string name="forgot_password">Forgot password</string>
     <string name="select_gender">Select a gender</string>
+    <string name="enter_name">Enter your name.</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
+    <string name="leave_prize_behind">Are you sure that you want to leave your gift behind?</string>
     <string name="loading">Loading...</string>
+    <string name="loading_error">Loading error...</string>
+    <string name="loading_error_patient">Error loading please be patient</string>
+    <string name="loading_error_failed">Unfortunately we cannot process your request. Please try again!</string>
+    <string name="loading_cart_products">Verifying and loading your cart.</string>
+    <string name="loading_prize">Verifying and loading your prize.</string>
     <string name="registeration_process">Account registeration</string>
     <string name="succesfully_registered">Registeration was succesfull</string>
     <string name="failed_registeration">Registeration was unsuccesfull. Please try again.</string>
-    <string name="registering_account">Please wait while we register our account.</string>
+    <string name="email_already_used">Email alread registered.</string>
+    <string name="logged_in">Logged in.</string>
+    <string name="login">Login</string>
+    <string name="log_out">Log out</string>
+    <string name="empty_list">There are no products in this list. Would you like to continue shopping?</string>
+    <string name="your_cart_is_empty">Your cart is empty.</string>
+    <string name="your_viewed_is_empty">Your viewed list is empty.</string>
+    <string name="your_favourite_is_empty">Your favourites list is empty.</string>
+    <string name="you_have_no_order_history">You have no order history. Would you like to continue shopping.</string>
+    <string name="you_have_no_orderprizes_history">You have no prize history. Would you like to enter a competiton?</string>
+    <string name="forgot_password_sent">Reset password link was sent to </string>
+    <string name="forgotten_pass_not_sent">Reset password was not sent please confirm your email address.</string>
+    <string name="incorrect_password">Incorrect login details. Please try again.</string>
+    <string name="registering_account">Please wait while we register your account.</string>
     <string name="signed_out">Signed out</string>
     <string name="cancelled_registerion">Registeration was cancelled. In order to use Flash Sales you must register</string>
+    <string name="cancel">Cancel</string>
+    <string name="cancel_share_action">Please share Flash Sales in order to unlock your prize</string>
     <string name="save_thousands">Save thousands on our daily flash sales!</string>
     <string name="cart_expires_in">Your cart will expire in </string>
     <string name="slogan">Get It While It Lasts...</string>
     <string name="adding_to_cart">Adding to cart.</string>
+    <string name="recommened_products">Recommened products</string>
     <string name="removing_from_cart">Removing item from cart.</string>
     <string name="select_varient">Please select a </string>
     <string name="select_amount">Please select an amount</string>
-    <string name="noti_shopping_cart_expire">Your cart will expire in a few minutes</string>
-    <string name="noti_claim_savings">Flash Sales claim your savings</string>
+    <string name="noti_shopping_cart_expire">Claim your cart!</string>
+    <string name="noti_claim_savings">Your cart is reserved for another 5 minutes</string>
     <string name="noti_cart_expired">Your shopping cart has expired</string>
     <string name="noti_countinue_shopping">Would you like to continue shopping?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="one_person_viewing">1 Viewing Now.</string>
     <string name="error_occured">An error occured please try again.</string>
     <string name="loading_products">Loading products...</string>
+    <string name="saved_favourites">Saved to favourites</string>
+    <string name="save_favourites">Save to favourites</string>
+    <string name="last_chance_claim">Last chance to claim your prize.</string>
+    <string name="favourites">favourites</string>
+    <string name="viewed">viewed</string>
     <string name="updating_account">Updating your account information</string>
     <string name="shipping_delivery">Shipping And Deliver</string>
     <string name="returns_refunds">Returns And Refunds</string>
     <string name="pricing_payments">Pricing And Payments</string>
-    <!-- FAQ-->
+    <string name="prize_free">Congrats you have won a Free prize.</string>
+    <string name="prize_congrats">Congratulations you have won a prize.</string>
+    <string name="prize_stand_chance">Congratulations you stand a chance to win a free %1$s.</string>
+    <string name="prize_expires">Hurry your prize expires in</string>
 
+    <string name="congrats">Congratulations!</string>
+    <string name="congrats_completed_steps">Congratulations you have completed all the steps!</string>
+    <string name="congrats_steps_completed">You have completed all the steps succesfully!</string>
+    <string name="prize_flash_sales_reward">Flash Sales likes to reward our users.</string>
+    <string name="prize_reward_product">Get the %1$s for free instead of $%2$s.</string>
+    <string name="prize_claim">Login and claim your free prize!</string>
+    <string name="prize_claim_continue">Continue to claim your prize.</string>
+    <string name="old_pass_word">Current password</string>
+    <string name="new_pass">New password</string>
+    <string name="old_email_address">Current email address..</string>
+    <string name="new_email">New email address..</string>
+    <!-- FAQ-->
+    <string name="general_faq">General FAQ.</string>
+    <string name="warranty_faq">Warranty, defects and returns FAQ.</string>
+    <string name="shipping_faq">Shipping FAQ</string>
     <string name="how_does_this_work">How does this work</string>
+    <string name="share_product">Share Flash Sales</string>
     <string name="how_does_this_work_content">
         Every night at 00:00  new products are featured on our app and  website.
         The offers are valid for 24 hours, or while stocks last. After ordering the product on Flash Sales
@@ -129,9 +233,9 @@
     <string name="question_product">I have a question about the product</string>
     <string name="question_product_content">What we do know can be found under "specifications" on the product page.
         If you need even more info, grab that model name and number and do some Google PI work.</string>
-    
-   <string name="customer_support">Do I get normal customer service?</string>
-   <string name="customer_support_content">Nope.You get the best customer service this side of Indian call centres.
+
+    <string name="customer_support">Do I get normal customer service?</string>
+    <string name="customer_support_content">Nope.You get the best customer service this side of Indian call centres.
        If you have a question, comment, change of heart or faulty unit, fire off a mail to [email]
        and a friendly little boffin will write you back sharpish.</string>
 
@@ -150,9 +254,14 @@
     <string name="damaged_arrivale">My order was damaged upon arrival. What can I do?</string>
     <string name="damaged_arrivale_content">Please contact customer support so we can start the refund policy</string>
 
+
     <string name="shipping_how_long">How long will delivery take?</string>
     <string name="shipping_how_long_content">How long is a piece of string? It all depends on the product. We generally aim to get you your stuff in 5 - 10 working days, but it can take longer.After ordering, processing and preparing your order we will send you a tracking number that you can use to see where your goodies are.</string>
     <!-- FAQ-->
+    <string name="adding_product_favouries">Adding this product to favourites.</string>
+    <string name="product_exists_favouries">Product exists in favourites.</string>
+    <string name="prize_summary">Prize infomration</string>
+    <string name="shipping_price">Shipping price</string>
 
     <string name="shipping"><![CDATA[<b>PROCESSING AND SHIPPING</b>
 
@@ -162,11 +271,11 @@
        <br>
         <b>RETURNS AND EXCHANGES</b>
         <br>
-        <p>If there is absolutely anything wrong with your order, please do not hesitate to shoot us an email at livemerakishop@gmail.com and we will help you out right away!
+        <p>If there is absolutely anything wrong with your order, please do not hesitate to shoot us an email at support@flashsales.com and we will help you out right away!
         </p>
         <br>
         <b>CUSTOMER SERVICE</b><br>
-        <p>Our helpful customer service department is committed to assist you in every way. If you have a question or problem with your order, please email us at livemerakishop@gmail.com 24 hours a day, 7 days a week!
+        <p>Our helpful customer service department is committed to assist you in every way. If you have a question or problem with your order, please email us at support@flashsales.com 24 hours a day, 7 days a week!
         </p>
        <br>
         <ul>
@@ -179,9 +288,34 @@
     </string>
     <string name="item_specs">Item Specifcations</string>
     <string name="description">Description</string>
+    <string name="discout_claim">Claim Your Discount!</string>
+    <string name="discount_explanation">Every app user is randomally awarded 10% off on top of any other discounts. This discount is only available for new users.</string>
+    <string name="discount_added">Congratulations! %1$s! You have %2$d percent off!</string>
     <string name="shipping_info">Shipping Information</string>
     <string name="title_activity_checout">ChecoutActivity</string>
-
+    <string name="product_rating">Product rating:</string>
+    <!-- Update account information-->
+    <string name="email_updated">Email was updated succesfully</string>
+    <string name="password_updated">Password was updated succesfully</string>
+    <string name="password_update_failed">Password update failed</string>
+    <string name="new_password_to_short">New Password is to short</string>
+    <string name="change_email">Change your email address.</string>
+    <string name="change_password">Change Your Password.</string>
     <!-- TODO: Remove or change this placeholder text -->
+
+    <!-- Payments-->
+    <string name="payment_cancelled">Payment was cancelled.</string>
+    <string name="payment_succesfull">Payment succesfull.</string>
+    <string name="your_payment_succesfull">Your payment was succesfull.</string>
+
+    <string name="shipping_fields_empty">Complete all shipping fields.</string>
+    <string name="internet_activated">Internet activated.</string>
+    <string name="warning_internet">Internet is not active on this device.</string>
+    <string name="warning_item_limited">*This products is limited to 3 items per person</string>
+    <string name="internet_required">Flash Sales mobile application requires internet access.</string>
+    <string name="internet_usage_low">Flash Sales requires minimal internet.</string>
+    <string name="check_internet_settings">Check that you have internet activated on your device</string>
+    <string name="shopping_cart_empty">Your shopping cart is empty would. You like to continue shopping?</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

@@ -4,8 +4,10 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Stock implements Parcelable {
-    private int stock;
     private String value;
+    private int stock;
+
+    public Stock(){}
 
     public Stock(String value, int stock) {
         this.value =value;
@@ -29,8 +31,8 @@ public class Stock implements Parcelable {
     }
 
     public Stock(Parcel in) {
-        this.stock = in.readInt();
         this.value = in.readString();
+        this.stock = in.readInt();
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {

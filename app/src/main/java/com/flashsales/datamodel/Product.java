@@ -1,5 +1,6 @@
 package com.flashsales.datamodel;
 
+import android.content.Intent;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -31,7 +32,8 @@ public class Product implements Parcelable {
     private String image;
     private int count;
     private String discount;
-    private double rating;
+    private double fakeRating;
+
 
     private ArrayList<ProductVariant> productVariants;
     private String varientSelected;
@@ -47,7 +49,7 @@ public class Product implements Parcelable {
         this.brand = brand;
         this.discount = discount;
         this.price = price;
-        this.rating = rating;
+        this.fakeRating = rating;
        // this.cartCount = orderCount;
     }
 
@@ -72,6 +74,8 @@ public class Product implements Parcelable {
         return discount;
     }
 
+
+
     public void setDiscount(String discount) {
         this.discount = discount;
     }
@@ -84,12 +88,12 @@ public class Product implements Parcelable {
         this.price = price;
     }
 
-    public double getRating() {
-        return rating;
+    public double getFakeRating() {
+        return fakeRating;
     }
 
-    public void setRating(double rating) {
-        this.rating = rating;
+    public void setFakeRating(double fakeRating) {
+        this.fakeRating = fakeRating;
     }
 
   /*  //public int getCartCount() {
@@ -235,16 +239,16 @@ public class Product implements Parcelable {
         dest.writeString(this.brand);
         dest.writeString(this.discount);
         dest.writeString(this.price);
-        dest.writeDouble(this.rating);
-      //  dest.writeInt(this.cartCount);
+        dest.writeString(this.retailPrice);
+        dest.writeString(this.shippingPrice);
+        dest.writeDouble(this.fakeRating);
         dest.writeList(this.images);
-        dest.writeList(this.productVariants);
         dest.writeString(this.shortName);
         dest.writeString(this.image);
         dest.writeString(this.varientSelected);
-      //  dest.writeList(this.stockArrayList);
         dest.writeString(this.parentVarient);
         dest.writeInt(this.count);
+        dest.writeList(this.productVariants);
     }
 
     public Product(Parcel in) {
@@ -252,15 +256,16 @@ public class Product implements Parcelable {
         this.brand = in.readString();
         this.discount = in.readString();
         this.price = in.readString();
-        this.rating = in.readDouble();
-      //  this.cartCount = in.readInt();
+        this.retailPrice = in.readString();
+        this.shippingPrice = in.readString();
+        this.fakeRating = in.readDouble();
         this.images = in.readArrayList(null);
-        this.productVariants = in.readArrayList(null);
         this.shortName = in.readString();
         this.image = in.readString();
         this.varientSelected = in.readString();
-      //  this.stockArrayList = in.readArrayList(null);
         this.parentVarient = in.readString();
         this.count =  in.readInt();
+        this.productVariants = in.readArrayList(Product.class.getClassLoader());
+
     }
 }

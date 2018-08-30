@@ -199,7 +199,7 @@ public class FragmentVarientSelection extends Fragment implements View.OnClickLi
                     btnCheckout.setText(R.string.adding_to_cart);
                     btnCheckout.setClickable(false);
                     mListener.onAddToCart(Integer.valueOf(etAmount.getText().toString()), valueSelected);
-                    mListener.onVarientsClose();
+                   /* mListener.onVarientsClose();*/
                 }
                 if (!checkCount()) {
                     notifyUser(getString(R.string.select_amount));

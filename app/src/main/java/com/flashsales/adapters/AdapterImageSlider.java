@@ -55,7 +55,7 @@ public class AdapterImageSlider extends PagerAdapter {
                 }
             }
         });
-        Picasso.with(context).load(images.get(position)).into(imProduct);
+        Picasso.with(context).load(images.get(position)).placeholder(R.drawable.logo).into(imProduct);
         container.addView(view);
 
         return view;

@@ -9,27 +9,28 @@
             android:id="@+id/nav_flashsales"
             android:title="@string/flash_sales" />
         <item
-            android:id="@+id/nav_under150"
-            android:title="@string/under150" />
+            android:id="@+id/nav_watches"
+            android:title="@string/nav_watches" />
         <item
-            android:id="@+id/nav_under300"
-            android:title="@string/under300" />
+            android:id="@+id/nav_earings"
+            android:title="@string/nav_earings" />
 
         <item
-            android:id="@+id/nav_under500"
-            android:title="@string/under500" />
-
-        <item
-            android:id="@+id/nav_under1000"
-            android:title="@string/under1000" />
-
+            android:id="@+id/nav_braclets"
+            android:title="@string/nav_braclets" />
+  <item
+            android:id="@+id/nav_necklace"
+            android:title="@string/nav_necklaces" />
 
 
         <item
-            android:id="@+id/nav_under2500"
-            android:title="@string/under2500" />
-
-        <item android:id="@+id/nav_faq"
-            android:title="@string/faq"></item>
+            android:id="@+id/nav_sunglasses"
+            android:title="@string/nav_sunglasses" />
+   <!--     <item
+            android:id="@+id/nav_histor"
+            android:title="@string/history"></item>-->
+      <!--  <item
+            android:id="@+id/nav_faq"
+            android:title="@string/faq"></item>-->
     </group>
 </menu>

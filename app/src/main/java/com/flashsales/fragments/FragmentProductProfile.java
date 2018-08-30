@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.NestedScrollView;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
@@ -17,10 +19,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.flashsales.Utils.FBEvents;
+import com.flashsales.MyApplication;
 import com.flashsales.Utils.Utils;
+import com.flashsales.dao.DBFavouriteProducts;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 
@@ -60,11 +64,15 @@ public class FragmentProductProfile extends Fragment {
     private CharSequence[] contents;
     private TextView tvVarColor, tvVarSize;
     private ViewpagerHeightWrapping vpInfo;
+    private LinearLayout layoutMain;
+    private ImageView ivFav, ivShare;
+    private boolean isFree;
 
-    public static FragmentProductProfile newInstance(Product product) {
+    public static FragmentProductProfile newInstance(Product product,boolean  isFree) {
         FragmentProductProfile fragmentProductProfile = new FragmentProductProfile();
         Bundle args = new Bundle();
         args.putParcelable(Utils.KEY_PRODUCT, product);
+        args.putBoolean(Utils.KEY_FREE_PRUDUCT,isFree);
         fragmentProductProfile.setArguments(args);
         return fragmentProductProfile;
     }
@@ -74,9 +82,10 @@ public class FragmentProductProfile extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         product = getArguments().getParcelable(Utils.KEY_PRODUCT);
+        isFree = getArguments().getBoolean(Utils.KEY_FREE_PRUDUCT);
         contents = new CharSequence[3];
-        features = buildFeatures(product.getFeatures()) + " " + stripHtml(product.getDescription());
-        Spanned spanned=Html.fromHtml(getString(R.string.shipping));
+        features = buildFeatures(product.getFeatures()/* + " " + stripHtml(product.getDescription()*/);
+        Spanned spanned = Html.fromHtml(getString(R.string.shipping));
 
         contents[0] = features;
         contents[1] = spanned;
@@ -95,7 +104,11 @@ public class FragmentProductProfile extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mFragListener = (OnProductEvent) context;
+        try {
+            mFragListener = (OnProductEvent) context;
+        } catch (ClassCastException ex) {
+            Log.e("ClassCastException", ex.toString());
+        }
     }
 
     @Nullable
@@ -104,13 +117,16 @@ public class FragmentProductProfile extends Fragment {
         Log.d("FragmentProductProfile", "onCreateView");
 
         View view = inflater.inflate(R.layout.fragment_product_profile_v2, container, false);
+        layoutMain = (LinearLayout) view.findViewById(R.id.layout_main);
 
-
+        final NestedScrollView ns = (NestedScrollView) view.findViewById(R.id.ns);
         ViewPager vpImages = (ViewPager) view.findViewById(R.id.vp);
-              vpImages.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        vpImages.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels){
+
             }
+
 
             @Override
             public void onPageSelected(int position) {
@@ -124,7 +140,7 @@ public class FragmentProductProfile extends Fragment {
             public void onPageScrollStateChanged(int state) {
             }
         });
-        if(product.getImagePaths().size()!=0 && product.getImagePaths() != null) {
+        if (product.getImagePaths().size() != 0 && product.getImagePaths() != null) {
             AdapterImageSlider adapterImageSlider = new AdapterImageSlider(getContext(), product.getImagePaths(), new AdapterImageSlider.OnImageClick() {
                 @Override
                 public void onImageClick() {
@@ -150,29 +166,30 @@ public class FragmentProductProfile extends Fragment {
         TextView tvSave = (TextView) view.findViewById(R.id.tv_save);
         TextView tvRetailPrice = (TextView) view.findViewById(R.id.tv_retail_price);
 
-
-
         RatingBar ratingBar = (RatingBar) view.findViewById(R.id.rb);
+        float ratingFlaot = Float.valueOf(String.valueOf(product.getFakeRating()));
+        ratingBar.setRating(ratingFlaot);
 
         tvName.setText(product.getName());
         tvBrand.setText(product.getBrand());
+
         String retailPrice = getContext().getString(R.string.retail_price);
         String currency = getContext().getString(R.string.currency);
         tvSave.setText(retailPrice);
         tvRetailPrice.setPaintFlags(tvRetailPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         tvRetailPrice.setText(currency + product.getRetailPrice());
         String only = getContext().getString(R.string.only);
-        String priceCta = only+" "+currency+" "+product.getPrice();
+
+        String priceCta ="";
+        if(!isFree) {
+             priceCta = only + " " + currency + product.getPrice();
+        }else{
+            priceCta = getString(R.string.free);
+        }
         tvPrice.setText(priceCta);
 
 
-
-
-
-
-
-
-        final TextPanel tvPanelShippingInfo = (TextPanel) view.findViewById(R.id.panel_shipping);
+      /*  final TextPanel tvPanelShippingInfo = (TextPanel) view.findViewById(R.id.panel_shipping);
 
         tvPanelShippingInfo.setPanelTitle("Shipping information");
         tvPanelShippingInfo.setPanelTitleIcon(R.drawable.ic_local_shipping);
@@ -180,21 +197,24 @@ public class FragmentProductProfile extends Fragment {
         tvPanelShippingInfo.setPanelListener(new CollapsablePanelView.PanelViewListener() {
             @Override
             public void onPanelOpened(CollapsablePanelView panel) {
+                ns.scrollTo(tvPanelShippingInfo.getScrollX(),tvPanelShippingInfo.getScrollY());
+
             }
 
             @Override
             public void onPanelClosed(CollapsablePanelView panel) {
 
             }
-        });
+        });*/
 
         final TextPanel tvPanelFeaturesInfo = (TextPanel) view.findViewById(R.id.panel_features);
         tvPanelFeaturesInfo.setPanelTitleIcon(R.drawable.ic_info);
-        tvPanelFeaturesInfo.setPanelTitle("Features");
-        tvPanelFeaturesInfo.setContent(contents[0]);
+        tvPanelFeaturesInfo.setPanelTitle("Product details");
+        tvPanelFeaturesInfo.setContent(contents[0]+" "+contents[1]);
         tvPanelFeaturesInfo.setPanelListener(new CollapsablePanelView.PanelViewListener() {
             @Override
             public void onPanelOpened(CollapsablePanelView panel) {
+                ns.scrollTo(tvPanelFeaturesInfo.getScrollX(),tvPanelFeaturesInfo.getScrollY());
             }
 
             @Override
@@ -203,27 +223,29 @@ public class FragmentProductProfile extends Fragment {
             }
         });
 
+        ivFav = (ImageView) view.findViewById(R.id.iv_favourite);
+        if (isFavourite()) {
+            ivFav.setImageResource(R.drawable.ic_favorite_border);
+        }
+        ivFav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveToFavourites();
+            }
+        });
+
+
+
 
         randomViewing(tvViewing);
-
         return view;
     }
 
-    public void resizePager(int position) {
-        View view = vpInfo.findViewWithTag(position);
-        if (view == null)
-            return;
-        view.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        int width = view.getMeasuredWidth();
-        int height = view.getMeasuredHeight();
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
-        vpInfo.setLayoutParams(params);
-    }
 
-    private void hideShippingInfo(TextPanel tvPanel) {
-        LinearLayout.LayoutParams lpTvPanel = new LinearLayout.LayoutParams(0, 0);
-        tvPanel.setLayoutParams(lpTvPanel);
-        tvPanel.setVisibility(View.INVISIBLE);
+
+    private boolean isFavourite() {
+        DBFavouriteProducts db = new DBFavouriteProducts(getContext());
+        return db.ifExists(product);
     }
 
     @Override
@@ -232,7 +254,11 @@ public class FragmentProductProfile extends Fragment {
 
     }
 
+    private void inflateRecommended(FragmentTransaction transaction) {
+        FragmentTopSales fragmentTopSales = FragmentTopSales.newInstance();
+        transaction.add(R.id.frame_top_sales, fragmentTopSales).commit();
 
+    }
 
     private void addDotsView(LinearLayout sliderLayout) {
         for (int i = 0; i < dotsCount; i++) {
@@ -252,8 +278,6 @@ public class FragmentProductProfile extends Fragment {
     }
 
     private void randomViewing(final TextView textView) {
-
-
         t = new Thread() {
 
             @Override
@@ -284,10 +308,7 @@ public class FragmentProductProfile extends Fragment {
             }
         };
         t.start();
-
-
     }
-
 
 
     private String buildFeatures(List<String> items) {
@@ -299,12 +320,39 @@ public class FragmentProductProfile extends Fragment {
         return value;
     }
 
-    public String stripHtml(String html) {
+    private String stripHtml(String html) {
         return Html.fromHtml(html).toString();
+    }
+
+    private void saveToFavourites() {
+        if (product.getImage() == null)
+            product.setImage(product.getImagePaths().get(0));
+        String message = "";
+        DBFavouriteProducts db = new DBFavouriteProducts(getContext());
+        if (!db.ifExists(product)) {
+            db.addProduct(product);
+            message = getString(R.string.adding_product_favouries);
+            ivFav.setImageResource(R.drawable.ic_favorite_border);
+            FBEvents fbEvents = new FBEvents(MyApplication.getInstance());
+            fbEvents.logAddedToWishlistEvent(product.getName(), product.getBrand(), product.getRetailPrice(), getString(R.string.currency),
+                    Double.parseDouble(product.getPrice()));
+
+            if (mFragListener != null)
+                mFragListener.itemSaved(message, true);
+
+        } else {
+            db.upDateProduct(product);
+            message = getString(R.string.product_exists_favouries);
+            if (mFragListener != null)
+                mFragListener.itemSaved(message, false);
+        }
+
+
     }
 
     public interface OnProductEvent {
         public void onExpandImage();
+        public void itemSaved(String message, boolean isSuccess);
     }
 
 }

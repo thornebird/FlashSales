@@ -81,15 +81,19 @@ public class ShippingAddress implements Parcelable {
         this.country = country;
     }
 
+    @Override
+    public String toString() {
+        return apt+" ," +shippingAddress +" ," +city +" ," + province +" ," + zipCode +" ," + country ;
+    }
+
     public ShippingAddress(Parcel in) {
         this.telephone = in.readString();
-        this.shippingAddress = in.readString();
         this.shippingAddress = in.readString();
         this.apt = in.readString();
         this.city = in.readString();
         this.province = in.readString();
-        this.zipCode = in.readString();
         this.country = in.readString();
+        this.zipCode = in.readString();
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
